@@ -8,11 +8,16 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * TODO: Get references to various DOM elements
  * - usernameInput, emailInput, passwordInput, repeatPasswordInput, registerButton
  */
-
+var registerButton = document.getElementById("register-button");
+var usernameInput = document.getElementById("username-input");
+var emailInput = document.getElementById("email-input");
+var passwordInput = document.getElementById("password-input");
+var repeatPasswordInput = document.getElementById("repeat-password-input");
 
 /* 
  * TODO: Ensure the register button calls processRegistration when clicked
  */
+registerButton.onclick = processRegistration;
 
 
 /**
@@ -39,10 +44,10 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - Log error and alert user
  */
 async function processRegistration() {
-    // Implement registration logic here
+    if (usernameInput == "" || emailInput == "" || passwordInput == "") alert("Fill all input fields!")
+    
+    const registerBody = { username, email, password };
 
-    // Example placeholder:
-    // const registerBody = { username, email, password };
 const requestOptions = {
         method: "POST",
         mode: "cors",
