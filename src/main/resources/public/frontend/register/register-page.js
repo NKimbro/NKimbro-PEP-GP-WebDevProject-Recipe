@@ -44,23 +44,39 @@ registerButton.onclick = processRegistration;
  * - Log error and alert user
  */
 async function processRegistration() {
-    if (usernameInput == "" || emailInput == "" || passwordInput == "") alert("Fill all input fields!")
-    
-    const registerBody = { username, email, password };
+    if (usernameInput == "" || emailInput == "" || passwordInput == "") alert("Fill all input fields!");
+    else if ( passwordInput != repeatPasswordInput) alert("Ensure repeated password is correct!");
+    else {
+        const registerBody = { usernameInput, emailInput, passwordInput };
 
-const requestOptions = {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*"
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(registerBody)
-    };
-    // await fetch(...)
+        const requestOptions = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(registerBody)
+        };
+        try {
+            const response = await fetch('${BASE_URL}/register', requestOptions);
+        l
+            if (response.status == 201) {
+                window.location.href = "../login/login-page.html";
+            } else if (response.status == 409) {
+              alert("An account with that username or email already exists.");
+            } else {
+                alert("Unknown registration error occured.");
+            }
+          } catch (error) {
+            // Handle network or other errors
+            console.error('Error:', error);
+          }
+    }
+    
 }
