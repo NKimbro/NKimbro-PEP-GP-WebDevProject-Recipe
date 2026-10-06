@@ -16,10 +16,27 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Admin link and logout button
      * - Search input
     */
+    var addName = document.getElementById("add-recipe-name-input");
+    var addInstructions = document.getElementById("add-recipe-instructions-input");
+    var addButton = document.getElementById("add-recipe-submit-input");
+    var updateName = document.getElementById("update-recipe-name-input");
+    var updateInstructions = document.getElementById("update-recipe-instructions-input");
+    var updateButton = document.getElementById("update-recipe-submit-input");
+    var deleteName = document.getElementById("delete-recipe-name-input");
+    var deleteButton = document.getElementById("delete-recipe-submit-input");
+    var recipeList = document.getElementById("recipe-list");
+    var adminLink = document.getElementById("admin-link");
+    var logoutButton = document.getElementById("logout-button");
+    var searchInput = document.getElementById("search-input");
+    var searchButton = document.getElementById("search-button");
 
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
+    if(sessionStorage.getItem(auth-token) != null) {
+        logoutButton.hidden = false;
+        if(sessionStorage.getItem(auth-token)) adminLink.hidden = false;
+    }
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
@@ -33,10 +50,16 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Search button → searchRecipes()
      * - Logout button → processLogout()
      */
+    addButton.addEventListener("click", () => {addRecipe();})
+    deleteButton.addEventListener("click", () => {deleteRecipe();})
+    updateButton.addEventListener("click", () => {updateRecipe();})
+    searchButton.addEventListener("click", () => {searchRecipes();})
+    logoutButton.addEventListener("click", () => {processLogout();})
 
     /*
      * TODO: On page load, call getRecipes() to populate the list
      */
+    getRecipes();
 
 
     /**
@@ -47,7 +70,16 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Handle fetch errors and alert user
      */
     async function searchRecipes() {
-        // Implement search logic here
+        // try {
+        //     const response = await fetch('${BASE_URL}', requestOptions);
+        //     if (response.ok) {
+                
+        //     } else if (response.status == 401) alert("Incorrect login!");
+        //     else alert("Unknown issue!");
+        // } catch (error) {
+        //     alert("Network error.");
+        //     console.error('Error:', error);
+        // }
     }
 
     /**
@@ -114,6 +146,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function processLogout() {
         // Implement logout logic here
+
     }
 
 });

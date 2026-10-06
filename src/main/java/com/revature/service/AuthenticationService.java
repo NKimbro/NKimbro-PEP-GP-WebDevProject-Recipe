@@ -9,7 +9,7 @@ import com.revature.model.Chef;
 
 /**
  * The AuthenticationService class handles user authentication, including login,
- * logout, registration, and session management for users.
+ * logout, registration, and session management for users. 
  *
  * This class utilizes the ChefService to interact with chef data.
  */

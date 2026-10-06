@@ -11,11 +11,17 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - login button
  * - logout button (optional, for token testing)
  */
+var usernameInput = document.getElementById("login-input");
+var passwordInput = document.getElementById("password-input");
+var loginButton = document.getElementById("login-button");
 
 /* 
  * TODO: Add click event listener to login button
  * - Call processLogin on click
  */
+loginButton.addEventListener("click", () => {processLogin();
+})
+
 
 
 /**
@@ -42,47 +48,61 @@ const BASE_URL = "http://localhost:8081"; // backend URL
 async function processLogin() {
     // TODO: Retrieve username and password from input fields
     // - Trim input and validate that neither is empty
+    username = usernameInput.trim();
+    password = passwordInput.trim();
+    if (username == "" || password == "") alert("Fill all input fields!");
+    else {
+        // TODO: Create a requestBody object with username and password
+        const requestBody = { username, password };
 
-    // TODO: Create a requestBody object with username and password
+        const requestOptions = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(requestBody)
+        };
 
-    const requestOptions = {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*"
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(requestBody)
-    };
+        try {
+            // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
+            const response = await fetch('${BASE_URL}/login', requestOptions);
+            if (response.ok) {
+                const sep = response.text.lastIndexOf(" ");
+                sessionStorage.setItem(response.text.substring(0, sep), response.text.substring(sep + 1));
+                setTimeout(500);
+                window.location.href = "../recipe/recipe-page.html";
+            } else if (response.status == 401) alert("Incorrect login!");
+            else alert("Unknown issue!");
+            // TODO: If response status is 200
+            // - Read the response as text
+            // - Response will be a space-separated string: "token123 true"
+            // - Split the string into token and isAdmin flag
+            // - Store both in sessionStorage using sessionStorage.setItem()
 
-    try {
-        // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
+            // TODO: Optionally show the logout button if applicable
 
-        // TODO: If response status is 200
-        // - Read the response as text
-        // - Response will be a space-separated string: "token123 true"
-        // - Split the string into token and isAdmin flag
-        // - Store both in sessionStorage using sessionStorage.setItem()
+            // TODO: Add a small delay (e.g., 500ms) using setTimeout before redirecting
+            // - Use window.location.href to redirect to the recipe page
 
-        // TODO: Optionally show the logout button if applicable
+            // TODO: If response status is 401
+            // - Alert the user with "Incorrect login!"
 
-        // TODO: Add a small delay (e.g., 500ms) using setTimeout before redirecting
-        // - Use window.location.href to redirect to the recipe page
+            // TODO: For any other status code
+            // - Alert the user with a generic error like "Unknown issue!"
 
-        // TODO: If response status is 401
-        // - Alert the user with "Incorrect login!"
-
-        // TODO: For any other status code
-        // - Alert the user with a generic error like "Unknown issue!"
-
-    } catch (error) {
-        // TODO: Handle any network or unexpected errors
-        // - Log the error and alert the user
+        } catch (error) {
+            // TODO: Handle any network or unexpected errors
+            // - Log the error and alert the user
+            alert("Network error.");
+            console.error('Error:', error);
+        }
     }
 }
 
