@@ -75,7 +75,8 @@ async function processLogin() {
             const response = await fetch('${BASE_URL}/login', requestOptions);
             if (response.ok) {
                 const sep = response.text.lastIndexOf(" ");
-                sessionStorage.setItem(response.text.substring(0, sep), response.text.substring(sep + 1));
+                sessionStorage.setItem("auth-token", response.text.substring(0, sep))
+                sessionStorage.setItem("is-admin", response.text.substring(sep + 1));
                 setTimeout(500);
                 window.location.href = "../recipe/recipe-page.html";
             } else if (response.status == 401) alert("Incorrect login!");

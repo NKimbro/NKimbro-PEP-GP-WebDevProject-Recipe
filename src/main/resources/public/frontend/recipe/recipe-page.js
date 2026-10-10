@@ -33,9 +33,9 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-    if(sessionStorage.getItem(auth-token) != null) {
+    if(sessionStorage.getItem("auth-token") != null) {
         logoutButton.hidden = false;
-        if(sessionStorage.getItem(auth-token)) adminLink.hidden = false;
+        if(sessionStorage.getItem("is-admin")) adminLink.hidden = false;
     }
 
     /*
@@ -70,16 +70,26 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Handle fetch errors and alert user
      */
     async function searchRecipes() {
-        // try {
-        //     const response = await fetch('${BASE_URL}', requestOptions);
-        //     if (response.ok) {
-                
-        //     } else if (response.status == 401) alert("Incorrect login!");
-        //     else alert("Unknown issue!");
-        // } catch (error) {
-        //     alert("Network error.");
-        //     console.error('Error:', error);
-        // }
+        try {
+            const params = new URLSearchParams();
+            params.append("name", searchInput);
+            const response = await fetch('${BASE_URL}/recipes?${params}', {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                  },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                recipes = [];
+                for (const recipe of data.recipes) recipes.append(recipe);
+                refreshRecipeList();
+            } else if (response.status == 404) alert("No recipes found");
+            else alert("Unknown issue!");
+        } catch (error) {
+            alert("Network error.");
+            console.error('Error:', error);
+        }
     }
 
     /**
@@ -91,7 +101,27 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: clear inputs, fetch latest recipes, refresh the list
      */
     async function addRecipe() {
-        // Implement add logic here
+        if (addName === "" || addInstructions === "") alert("Provide a name and instructions to add a recipe")
+        else {
+            try {
+                const response = await fetch('${BASE_URL}/recipes', {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                    },
+                    body: JSON.stringify({ name:  addName, instructions: addInstructions}),
+                });
+                if (response.ok) {
+                    addName.innerText = "";
+                    addInstructions.innerText = "";
+                    getRecipes();
+                    refreshRecipeList();
+                } else alert("Unknown issue!");
+            } catch (error) {
+                alert("Network error.");
+                console.error('Error:', error);
+            }
+        }
     }
 
     /**
@@ -134,7 +164,16 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Append to list container
      */
     function refreshRecipeList() {
-        // Implement refresh logic here
+        recipeList.innerHTML = "";
+        for (const recipe of recipes) {
+            const listItem = document.createElement("li");
+            listItem.appendChild(document.createElement("strong")).textContent =
+              recipe.name;
+            listItem.append(': ');
+            listItem.appendChild(document.createElement("strong")).textContent =
+              recipe.instructions;
+            recipeList.appendChild(listItem);
+        }
     }
 
     /**
