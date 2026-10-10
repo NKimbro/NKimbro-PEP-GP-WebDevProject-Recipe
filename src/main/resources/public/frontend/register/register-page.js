@@ -45,9 +45,9 @@ registerButton.addEventListener("click", () => {processRegistration();
  * - Log error and alert user
  */
 async function processRegistration() {
-    // if (usernameInput === "" || emailInput === "" || passwordInput === "") alert("Fill all input fields!");
-    // else if ( passwordInput !== repeatPasswordInput) alert("Ensure repeated password is correct!");
-    // else {
+    if (usernameInput === "" || emailInput === "" || passwordInput === "") alert("Fill all input fields!");
+    else if ( passwordInput !== repeatPasswordInput) alert("Ensure repeated password is correct!");
+    else {
         const registerBody = { usernameInput, emailInput, passwordInput };
 
         const requestOptions = {
@@ -66,7 +66,7 @@ async function processRegistration() {
         };
         try {
             const response = await fetch('${BASE_URL}/register', requestOptions);
-            if (response.status == 201) {
+            if (response.ok) {
                 window.location.href = "../login/login-page.html";
             } else if (response.status == 409) {
               alert("An account with that username or email already exists.");
@@ -77,6 +77,6 @@ async function processRegistration() {
             alert("Network error.");
             console.error('Error:', error);
         }
-    // }
+    }
     
 }

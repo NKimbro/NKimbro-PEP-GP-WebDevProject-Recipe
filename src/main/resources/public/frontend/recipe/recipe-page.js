@@ -109,7 +109,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     headers: {
                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                     },
-                    body: JSON.stringify({ name:  addName, instructions: addInstructions}),
+                    body: JSON.stringify({ addName, addInstructions}),
                 });
                 if (response.ok) {
                     addName.innerText = "";
@@ -133,7 +133,33 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: clear inputs, fetch latest recipes, refresh the list
      */
     async function updateRecipe() {
-        // Implement update logic here
+        if (updateName === "" || updateInstructions === "") alert("Provide a name and instructions to update a recipe")
+        else {
+            getRecipes();
+            let id = -1
+            for (const recipe of recipes) if (recipe.name === updateName) id = recipe.id;
+            if (id === -1) alert("Could not find recipe to update");
+            else {
+                try {
+                    const response = await fetch('${BASE_URL}/recipes/${id}', {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                        },
+                        body: JSON.stringify({ updateName, updateInstructions}),
+                    });
+                    if (response.ok) {
+                        updateName.innerText = "";
+                        updateInstructions.innerText = "";
+                        getRecipes();
+                        refreshRecipeList();
+                    } else alert("Unknown issue!");
+                } catch (error) {
+                    alert("Network error.");
+                    console.error('Error:', error);
+                }
+            }
+        }
     }
 
     /**
@@ -144,7 +170,31 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: refresh the list
      */
     async function deleteRecipe() {
-        // Implement delete logic here
+        if (deleteName === "") alert("Provide a name to delete a recipe")
+        else {
+            getRecipes();
+            let id = -1
+            for (const recipe of recipes) if (recipe.name === deleteName) id = recipe.id;
+            if (id === -1) alert("Could not find recipe to delete");
+            else {
+                try {
+                    const response = await fetch('${BASE_URL}/recipes/${id}', {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                        },
+                    });
+                    if (response.ok) {
+                        deleteName.innerText = "";
+                        getRecipes();
+                        refreshRecipeList();
+                    } else alert("Unknown issue!");
+                } catch (error) {
+                    alert("Network error.");
+                    console.error('Error:', error);
+                }
+            }
+        }
     }
 
     /**
@@ -154,7 +204,24 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Call refreshRecipeList() to display
      */
     async function getRecipes() {
-        // Implement get logic here
+        try {
+            const response = await fetch('${BASE_URL}/recipes', {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                  },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                recipes = [];
+                for (const recipe of data.recipes) recipes.append(recipe);
+                refreshRecipeList();
+            } else if (response.status == 404) alert("No recipes found");
+            else alert("Unknown issue!");
+        } catch (error) {
+            alert("Network error.");
+            console.error('Error:', error);
+        }
     }
 
     /**
@@ -184,8 +251,21 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On failure: alert the user
      */
     async function processLogout() {
-        // Implement logout logic here
-
+        try {
+            const response = await fetch('${BASE_URL}/logout', {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                  },
+            });
+            if (response.ok) {
+                sessionStorage.clear();
+                window.location.href = "../login/login-page.html";
+            } else alert("Unknown issue!");
+        } catch (error) {
+            alert("Network error.");
+            console.error('Error:', error);
+        }
     }
 
 });
