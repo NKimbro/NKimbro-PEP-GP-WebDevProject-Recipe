@@ -74,6 +74,7 @@ async function processLogin() {
             // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
             const response = await fetch(`${BASE_URL}/login`, requestOptions);
             if (response.ok) {
+                alert("Reached ok");
                 const text = await response.text();
                 const sep = text.lastIndexOf(" ");
                 sessionStorage.setItem("auth-token", text.substring(0, sep))
@@ -103,7 +104,7 @@ async function processLogin() {
         } catch (error) {
             // TODO: Handle any network or unexpected errors
             // - Log the error and alert the user
-            alert("Network error.");
+            alert(`Network error. ${error.name}\n${error.message}\n${error}`);
         }
     }
 }
