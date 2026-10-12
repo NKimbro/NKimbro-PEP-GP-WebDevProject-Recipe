@@ -88,7 +88,6 @@ window.addEventListener("DOMContentLoaded", () => {
             else alert("Unknown issue!");
         } catch (error) {
             alert("Network error.");
-            console.error('Error:', error);
         }
     }
 
@@ -119,7 +118,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 } else alert("Unknown issue!");
             } catch (error) {
                 alert("Network error.");
-                console.error('Error:', error);
             }
         }
     }
@@ -156,7 +154,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     } else alert("Unknown issue!");
                 } catch (error) {
                     alert("Network error.");
-                    console.error('Error:', error);
                 }
             }
         }
@@ -191,7 +188,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     } else alert("Unknown issue!");
                 } catch (error) {
                     alert("Network error.");
-                    console.error('Error:', error);
                 }
             }
         }
@@ -220,7 +216,6 @@ window.addEventListener("DOMContentLoaded", () => {
             else alert("Unknown issue!");
         } catch (error) {
             alert("Network error.");
-            console.error('Error:', error);
         }
     }
 
@@ -264,7 +259,6 @@ window.addEventListener("DOMContentLoaded", () => {
             } else alert("Unknown issue!");
         } catch (error) {
             alert("Network error.");
-            console.error('Error:', error);
         }
     }
 

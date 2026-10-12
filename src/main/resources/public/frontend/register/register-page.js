@@ -75,7 +75,6 @@ async function processRegistration() {
             }
         } catch (error) {
             alert("Network error.");
-            console.error('Error:', error);
         }
     }
     
