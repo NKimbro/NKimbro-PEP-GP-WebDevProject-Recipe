@@ -78,9 +78,7 @@ async function processLogin() {
                 const sep = text.lastIndexOf(" ");
                 sessionStorage.setItem("auth-token", text.substring(0, sep))
                 sessionStorage.setItem("is-admin", text.substring(sep + 1));
-                setTimeout(() => {
-                    window.location.href = "../recipe/recipe-page.html";
-                }, 500);
+                window.location.href = "../recipe/recipe-page.html";
             } else if (response.status == 401) alert("Incorrect login!");
             else alert("Unknown issue!");
             // TODO: If response status is 200
