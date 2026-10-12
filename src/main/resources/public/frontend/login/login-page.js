@@ -74,11 +74,14 @@ async function processLogin() {
             // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
             const response = await fetch(`${BASE_URL}/login`, requestOptions);
             if (response.ok) {
-                const text = response.text();
+                alert("Reached ok");
+                const text = await response.text();
                 const sep = text.lastIndexOf(" ");
                 sessionStorage.setItem("auth-token", text.substring(0, sep))
                 sessionStorage.setItem("is-admin", text.substring(sep + 1));
-                window.location.href = "../recipe/recipe-page.html";
+                setTimeout(() => {
+                    window.location.href = "../recipe/recipe-page.html";
+                }, 500);
             } else if (response.status == 401) alert("Incorrect login!");
             else alert("Unknown issue!");
             // TODO: If response status is 200
@@ -101,7 +104,7 @@ async function processLogin() {
         } catch (error) {
             // TODO: Handle any network or unexpected errors
             // - Log the error and alert the user
-            alert("Network error.");
+            alert(`Network error. ${error.name}\n${error.message}\n${error}`);
         }
     }
 }
