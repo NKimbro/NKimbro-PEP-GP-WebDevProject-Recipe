@@ -48,8 +48,8 @@ loginButton.addEventListener("click", () => {processLogin();
 async function processLogin() {
     // TODO: Retrieve username and password from input fields
     // - Trim input and validate that neither is empty
-    username = usernameInput.trim();
-    password = passwordInput.trim();
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
     if (username == "" || password == "") alert("Fill all input fields!");
     else {
         // TODO: Create a requestBody object with username and password
@@ -57,28 +57,23 @@ async function processLogin() {
 
         const requestOptions = {
             method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
             },
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
             body: JSON.stringify(requestBody)
         };
 
         try {
             // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
-            const response = await fetch('${BASE_URL}/login', requestOptions);
+            const response = await fetch(`${BASE_URL}/login`, requestOptions);
             if (response.ok) {
-                const sep = response.text.lastIndexOf(" ");
-                sessionStorage.setItem("auth-token", response.text.substring(0, sep))
-                sessionStorage.setItem("is-admin", response.text.substring(sep + 1));
-                setTimeout(500);
-                window.location.href = "../recipe/recipe-page.html";
+                const text = await response.text();
+                const sep = text.lastIndexOf(" ");
+                sessionStorage.setItem("auth-token", text.substring(0, sep))
+                sessionStorage.setItem("is-admin", text.substring(sep + 1));
+                setTimeout(() => {
+                    window.location.href = "../recipe/recipe-page.html";
+                }, 500);
             } else if (response.status == 401) alert("Incorrect login!");
             else alert("Unknown issue!");
             // TODO: If response status is 200

@@ -52,20 +52,13 @@ async function processRegistration() {
 
         const requestOptions = {
             method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
             },
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
             body: JSON.stringify(registerBody)
         };
         try {
-            const response = await fetch('${BASE_URL}/register', requestOptions);
+            const response = await fetch(`${BASE_URL}/register`, requestOptions);
             if (response.ok) {
                 window.location.href = "../login/login-page.html";
             } else if (response.status == 409) {

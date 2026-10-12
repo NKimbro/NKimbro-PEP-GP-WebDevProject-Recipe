@@ -73,7 +73,7 @@ window.addEventListener("DOMContentLoaded", () => {
         try {
             const params = new URLSearchParams();
             params.append("name", searchInput);
-            const response = await fetch('${BASE_URL}/recipes?${params}', {
+            const response = await fetch(`${BASE_URL}/recipes?${params}`, {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -103,7 +103,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if (addName === "" || addInstructions === "") alert("Provide a name and instructions to add a recipe")
         else {
             try {
-                const response = await fetch('${BASE_URL}/recipes', {
+                const response = await fetch(`${BASE_URL}/recipes`, {
                     method: "POST",
                     headers: {
                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -139,7 +139,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (id === -1) alert("Could not find recipe to update");
             else {
                 try {
-                    const response = await fetch('${BASE_URL}/recipes/${id}', {
+                    const response = await fetch(`${BASE_URL}/recipes/${id}`, {
                         method: "PUT",
                         headers: {
                             "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -175,7 +175,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (id === -1) alert("Could not find recipe to delete");
             else {
                 try {
-                    const response = await fetch('${BASE_URL}/recipes/${id}', {
+                    const response = await fetch(`${BASE_URL}/recipes/${id}`, {
                         method: "DELETE",
                         headers: {
                             "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -201,7 +201,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function getRecipes() {
         try {
-            const response = await fetch('${BASE_URL}/recipes', {
+            const response = await fetch(`${BASE_URL}/recipes`, {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -247,7 +247,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function processLogout() {
         try {
-            const response = await fetch('${BASE_URL}/logout', {
+            const response = await fetch(`${BASE_URL}/logout`, {
                 method: "POST",
                 headers: {
                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")

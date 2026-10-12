@@ -57,7 +57,7 @@ async function addIngredient() {
     if (addName === "") alert("Provide a name to add an ingredient")
     else {
         try {
-            const response = await fetch('${BASE_URL}/ingredients', {
+            const response = await fetch(`${BASE_URL}/ingredients`, {
                 method: "POST",
                 headers: {
                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -88,7 +88,7 @@ async function addIngredient() {
 async function getIngredients() {
     // Implement get ingredients logic here
     try {
-        const response = await fetch('${BASE_URL}/ingredients', {
+        const response = await fetch(`${BASE_URL}/ingredients`, {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -129,7 +129,7 @@ async function deleteIngredient() {
         if (id === -1) alert("Could not find ingredient to delete");
         else {
             try {
-                const response = await fetch('${BASE_URL}/ingredients/${id}', {
+                const response = await fetch(`${BASE_URL}/ingredients/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
