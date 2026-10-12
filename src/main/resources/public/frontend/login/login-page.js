@@ -74,7 +74,6 @@ async function processLogin() {
             // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
             const response = await fetch(`${BASE_URL}/login`, requestOptions);
             if (response.ok) {
-                alert("Reached ok");
                 const text = await response.text();
                 const sep = text.lastIndexOf(" ");
                 sessionStorage.setItem("auth-token", text.substring(0, sep))
