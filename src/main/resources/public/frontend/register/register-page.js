@@ -45,10 +45,14 @@ registerButton.addEventListener("click", () => {processRegistration();
  * - Log error and alert user
  */
 async function processRegistration() {
-    if (usernameInput === "" || emailInput === "" || passwordInput === "") alert("Fill all input fields!");
-    else if ( passwordInput !== repeatPasswordInput) alert("Ensure repeated password is correct!");
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const repeatPassword = repeatPasswordInput.value;
+    if (username === "" || email === "" || password === "") alert("Fill all input fields!");
+    else if ( password !== repeatPassword) alert("Ensure repeated password is correct!");
     else {
-        const registerBody = { usernameInput, emailInput, passwordInput };
+        const registerBody = { username, email, password };
 
         const requestOptions = {
             method: "POST",
