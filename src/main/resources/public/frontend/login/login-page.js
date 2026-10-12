@@ -57,9 +57,16 @@ async function processLogin() {
 
         const requestOptions = {
             method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
             },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
             body: JSON.stringify(requestBody)
         };
 
