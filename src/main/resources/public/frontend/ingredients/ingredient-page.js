@@ -37,6 +37,7 @@ let ingredients = [];
 /* 
  * TODO: On page load, call getIngredients()
  */
+alert("Reached ingredients");
 getIngredients();
 
 
@@ -97,7 +98,6 @@ async function getIngredients() {
         });
         if (response.ok) {
             ingredients = await response.json();
-            alert(ingredients);
             refreshIngredientList();
         } else if (response.status == 404) alert("No ingredients found");
         else alert("Unknown issue!");
