@@ -104,7 +104,7 @@ async function processLogin() {
             // TODO: Handle any network or unexpected errors
             // - Log the error and alert the user
             console.error(error);
-            alert("Network error.");
+            alert(error.name);
         }
     }
 }
