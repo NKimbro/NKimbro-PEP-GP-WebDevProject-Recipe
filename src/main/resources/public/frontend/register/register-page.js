@@ -78,7 +78,7 @@ async function processRegistration() {
                 alert("Unknown registration error occured.");
             }
         } catch (error) {
-            alert("Register network error.");
+            alert("Network error.");
         }
     }
     

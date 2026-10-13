@@ -103,7 +103,7 @@ async function processLogin() {
         } catch (error) {
             // TODO: Handle any network or unexpected errors
             // - Log the error and alert the user
-            alert("Login network error.");
+            alert("Network error.");
         }
     }
 }

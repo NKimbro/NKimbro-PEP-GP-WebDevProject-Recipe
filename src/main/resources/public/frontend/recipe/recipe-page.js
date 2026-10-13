@@ -35,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     if(sessionStorage.getItem("auth-token") != null) {
         logoutButton.hidden = false;
-        if(sessionStorage.getItem("is-admin")) adminLink.hidden = false;
+        if(sessionStorage.getItem("is-admin") === "true") adminLink.hidden = false;
     }
 
     /*
@@ -87,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
             } else if (response.status == 404) alert("No recipes found");
             else alert("Unknown issue!");
         } catch (error) {
-            alert("Recipe network error.");
+            alert("Network error.");
         }
     }
 
@@ -119,7 +119,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     refreshRecipeList();
                 } else alert("Unknown issue!");
             } catch (error) {
-                alert("Recipe network error.");
+                alert("Network error.");
             }
         }
     }
@@ -158,7 +158,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         refreshRecipeList();
                     } else alert("Unknown issue!");
                 } catch (error) {
-                    alert("Recipe network error.");
+                    alert("Network error.");
                 }
             }
         }
@@ -193,7 +193,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         refreshRecipeList();
                     } else alert("Unknown issue!");
                 } catch (error) {
-                    alert("Recipe network error.");
+                    alert("Network error.");
                 }
             }
         }
@@ -219,7 +219,7 @@ window.addEventListener("DOMContentLoaded", () => {
             } else if (response.status == 404) alert("No recipes found");
             else alert("Unknown issue!");
         } catch (error) {
-            alert("Recipe network error.");
+            alert("Network error.");
         }
     }
 
@@ -262,7 +262,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "../login/login-page.html";
             } else alert("Unknown issue!");
         } catch (error) {
-            alert("Recipe network error.");
+            alert("Network error.");
         }
     }
 

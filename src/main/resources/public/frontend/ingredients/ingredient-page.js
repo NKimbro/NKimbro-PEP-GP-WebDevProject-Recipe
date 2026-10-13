@@ -53,24 +53,25 @@ getIngredients();
  */
 async function addIngredient() {
     // Implement add ingredient logic here
-    addName = addName.trim();
-    if (addName === "") alert("Provide a name to add an ingredient")
+    const name = addName.value.trim();
+    if (name === "") alert("Provide a name to add an ingredient")
     else {
         try {
             const response = await fetch(`${BASE_URL}/ingredients`, {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                 },
-                body: JSON.stringify({ addName}),
+                body: JSON.stringify({ name}),
             });
             if (response.ok) {
-                addName.innerText = "";
+                addName.value = "";
                 getIngredients();
                 refreshIngredientList();
             } else alert("Unknown issue!");
         } catch (error) {
-            alert("Ingredient network error.");
+            alert("Network error.");
         }
     }
 }
@@ -95,14 +96,12 @@ async function getIngredients() {
               },
         });
         if (response.ok) {
-            const data = await response.json();
-            ingredients = [];
-            for (const ingredient of data.ingredients) ingredients.append(ingredient);
+            ingredients = await response.json();
             refreshIngredientList();
         } else if (response.status == 404) alert("No ingredients found");
         else alert("Unknown issue!");
     } catch (error) {
-        alert("Ingredient network error.");
+        alert("Network error.");
     }
 }
 
@@ -141,7 +140,7 @@ async function deleteIngredient() {
                     refreshingredientList();
                 } else alert("Unknown issue!");
             } catch (error) {
-                alert("Ingredient network error.");
+                alert("Network error.");
             }
         }
     }
