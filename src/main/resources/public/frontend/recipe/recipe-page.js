@@ -33,11 +33,8 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-    if(sessionStorage.getItem("auth-token") != null) {
-        logoutButton.hidden = false;
-        if(sessionStorage.getItem("is-admin") === "true") adminLink.hidden = false;
-        else alert(sessionStorage.getItem("is-admin"));
-    }
+    if(sessionStorage.getItem("auth-token") != null) logoutButton.hidden = false;
+    if(sessionStorage.getItem("is-admin") === "true") adminLink.hidden = false;
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
