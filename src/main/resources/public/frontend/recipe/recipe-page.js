@@ -70,19 +70,19 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Handle fetch errors and alert user
      */
     async function searchRecipes() {
+        const search = searchInput.value.trim();
         try {
             const params = new URLSearchParams();
-            params.append("name", searchInput);
+            params.append("name", search);
             const response = await fetch(`${BASE_URL}/recipes?${params}`, {
                 method: "GET",
                 headers: {
+                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                   },
             });
             if (response.ok) {
-                const data = await response.json();
-                recipes = [];
-                for (const recipe of data.recipes) recipes.append(recipe);
+                recipes = await response.json();
                 refreshRecipeList();
             } else if (response.status == 404) alert("No recipes found");
             else alert("Unknown issue!");
@@ -100,7 +100,9 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: clear inputs, fetch latest recipes, refresh the list
      */
     async function addRecipe() {
-        if (addName === "" || addInstructions === "") alert("Provide a name and instructions to add a recipe")
+        const name = addName.value.trim();
+        const instructions = addInstructions.value.trim();
+        if (name === "" || instructions === "") alert("Provide a name and instructions to add a recipe")
         else {
             try {
                 const response = await fetch(`${BASE_URL}/recipes`, {
@@ -108,11 +110,11 @@ window.addEventListener("DOMContentLoaded", () => {
                     headers: {
                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                     },
-                    body: JSON.stringify({ addName, addInstructions}),
+                    body: JSON.stringify({ name, instructions}),
                 });
                 if (response.ok) {
-                    addName.innerText = "";
-                    addInstructions.innerText = "";
+                    addName.value = "";
+                    addInstructions.value = "";
                     getRecipes();
                     refreshRecipeList();
                 } else alert("Unknown issue!");
@@ -131,24 +133,27 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: clear inputs, fetch latest recipes, refresh the list
      */
     async function updateRecipe() {
-        if (updateName === "" || updateInstructions === "") alert("Provide a name and instructions to update a recipe")
+        const name = updateName.value.trim();
+        const instructions = updateInstructions.value.trim();
+        if (name === "" || instructions === "") alert("Provide a name and instructions to update a recipe")
         else {
             getRecipes();
             let id = -1
-            for (const recipe of recipes) if (recipe.name === updateName) id = recipe.id;
+            for (const recipe of recipes) if (recipe.name === name) id = recipe.id;
             if (id === -1) alert("Could not find recipe to update");
             else {
                 try {
                     const response = await fetch(`${BASE_URL}/recipes/${id}`, {
                         method: "PUT",
                         headers: {
+                            "Content-Type": "application/json",
                             "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                         },
-                        body: JSON.stringify({ updateName, updateInstructions}),
+                        body: JSON.stringify({ name, instructions}),
                     });
                     if (response.ok) {
-                        updateName.innerText = "";
-                        updateInstructions.innerText = "";
+                        updateName.value = "";
+                        updateInstructions.value = "";
                         getRecipes();
                         refreshRecipeList();
                     } else alert("Unknown issue!");
@@ -167,11 +172,12 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: refresh the list
      */
     async function deleteRecipe() {
-        if (deleteName === "") alert("Provide a name to delete a recipe")
+        const name = deleteName.value.trim();
+        if (name === "") alert("Provide a name to delete a recipe")
         else {
             getRecipes();
             let id = -1
-            for (const recipe of recipes) if (recipe.name === deleteName) id = recipe.id;
+            for (const recipe of recipes) if (recipe.name === name) id = recipe.id;
             if (id === -1) alert("Could not find recipe to delete");
             else {
                 try {
@@ -182,7 +188,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         },
                     });
                     if (response.ok) {
-                        deleteName.innerText = "";
+                        deleteName.value = "";
                         getRecipes();
                         refreshRecipeList();
                     } else alert("Unknown issue!");
@@ -208,9 +214,7 @@ window.addEventListener("DOMContentLoaded", () => {
                   },
             });
             if (response.ok) {
-                const data = await response.json();
-                recipes = [];
-                for (const recipe of data.recipes) recipes.append(recipe);
+                recipes = await response.json();
                 refreshRecipeList();
             } else if (response.status == 404) alert("No recipes found");
             else alert("Unknown issue!");
