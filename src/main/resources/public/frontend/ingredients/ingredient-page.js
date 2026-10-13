@@ -14,9 +14,9 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  */
 
     var addName = document.getElementById("add-ingredient-name-input");
-    var addButton = document.getElementById("add-ingredient-submit-input");
+    var addButton = document.getElementById("add-ingredient-submit-button");
     var deleteName = document.getElementById("delete-ingredient-name-input");
-    var deleteButton = document.getElementById("delete-ingredient-submit-input");
+    var deleteButton = document.getElementById("delete-ingredient-submit-button");
     var ingredientList = document.getElementById("ingredient-list");
     var backLink = document.getElementById("back-link");
 
@@ -37,7 +37,6 @@ let ingredients = [];
 /* 
  * TODO: On page load, call getIngredients()
  */
-alert("Reached ingredients");
 getIngredients();
 
 
