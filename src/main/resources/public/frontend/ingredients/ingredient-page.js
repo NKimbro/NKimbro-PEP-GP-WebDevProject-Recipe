@@ -32,7 +32,7 @@ deleteButton.addEventListener("click", () => {deleteIngredient();})
  * TODO: Create an array to keep track of ingredients
  */
 
-ingredients = [];
+let ingredients = [];
 
 /* 
  * TODO: On page load, call getIngredients()
@@ -119,12 +119,12 @@ async function getIngredients() {
  */
 async function deleteIngredient() {
     // Implement delete ingredient logic here
-    deleteName = deleteName.trim();
-    if (deleteName === "") alert("Provide a name to delete a ingredient")
+    const name = deleteName.value.trim();
+    if (name === "") alert("Provide a name to delete a ingredient")
     else {
         getIngredients();
         let id = -1
-        for (const ingredient of ingredients) if (ingredient.name === deleteName) id = ingredient.id;
+        for (const ingredient of ingredients) if (ingredient.name === name) id = ingredient.id;
         if (id === -1) alert("Could not find ingredient to delete");
         else {
             try {
@@ -135,9 +135,9 @@ async function deleteIngredient() {
                     },
                 });
                 if (response.ok) {
-                    deleteName.innerText = "";
-                    getingredients();
-                    refreshingredientList();
+                    deleteName.value = "";
+                    getIngredients();
+                    refreshIngredientList();
                 } else alert("Unknown issue!");
             } catch (error) {
                 alert("Network error.");
@@ -164,9 +164,6 @@ function refreshIngredientList() {
         const listItem = document.createElement("li");
         listItem.appendChild(document.createElement("strong")).textContent =
             ingredient.name;
-        listItem.append(': ');
-        listItem.appendChild(document.createElement("strong")).textContent =
-            ingredient.instructions;
         ingredientList.appendChild(listItem);
     }
 }
