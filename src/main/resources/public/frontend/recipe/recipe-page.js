@@ -106,7 +106,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch(`${BASE_URL}/recipes`, {
                     method: "POST",
                     headers: {
-                        
+                        "Content-Type": "application/json",
                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                     },
                     body: JSON.stringify({ name, instructions}),
@@ -114,7 +114,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 if (response.ok) {
                     addName.value = "";
                     addInstructions.value = "";
-                    getRecipes();
+                    await getRecipes();
                     refreshRecipeList();
                 } else alert("Unknown issue!");
             } catch (error) {
@@ -136,7 +136,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const instructions = updateInstructions.value.trim();
         if (name === "" || instructions === "") alert("Provide a name and instructions to update a recipe")
         else {
-            getRecipes();
+            await getRecipes();
             let id = -1
             for (const recipe of recipes) if (recipe.name === name) id = recipe.id;
             if (id === -1) alert("Could not find recipe to update");
@@ -153,7 +153,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     if (response.ok) {
                         updateName.value = "";
                         updateInstructions.value = "";
-                        getRecipes();
+                        await getRecipes();
                         refreshRecipeList();
                     } else alert("Unknown issue!");
                 } catch (error) {
@@ -174,7 +174,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const name = deleteName.value.trim();
         if (name === "") alert("Provide a name to delete a recipe")
         else {
-            getRecipes();
+            await getRecipes();
             let id = -1
             for (const recipe of recipes) if (recipe.name === name) id = recipe.id;
             if (id === -1) alert("Could not find recipe to delete");
@@ -188,7 +188,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     });
                     if (response.ok) {
                         deleteName.value = "";
-                        getRecipes();
+                        await getRecipes();
                         refreshRecipeList();
                     } else alert("Unknown issue!");
                 } catch (error) {

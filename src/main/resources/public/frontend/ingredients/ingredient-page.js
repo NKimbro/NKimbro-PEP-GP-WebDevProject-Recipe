@@ -67,7 +67,7 @@ async function addIngredient() {
             });
             if (response.ok) {
                 addName.value = "";
-                getIngredients();
+                await getIngredients();
                 refreshIngredientList();
             } else alert("Unknown issue!");
         } catch (error) {
