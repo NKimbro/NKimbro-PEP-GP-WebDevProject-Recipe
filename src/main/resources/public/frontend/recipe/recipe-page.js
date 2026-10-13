@@ -34,10 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
     if(sessionStorage.getItem("auth-token") != null) logoutButton.hidden = false;
-    if(sessionStorage.getItem("is-admin") === "true") {
-        alert("Admin")
-        adminLink.hidden = false;
-    }
+    if(sessionStorage.getItem("is-admin") === "true") adminLink.hidden = false;
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
@@ -109,6 +106,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch(`${BASE_URL}/recipes`, {
                     method: "POST",
                     headers: {
+                        
                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                     },
                     body: JSON.stringify({ name, instructions}),
