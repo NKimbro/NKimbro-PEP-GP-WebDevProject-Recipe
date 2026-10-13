@@ -70,7 +70,7 @@ async function addIngredient() {
                 refreshIngredientList();
             } else alert("Unknown issue!");
         } catch (error) {
-            alert("Network error.");
+            alert("Ingredient network error.");
         }
     }
 }
@@ -102,7 +102,7 @@ async function getIngredients() {
         } else if (response.status == 404) alert("No ingredients found");
         else alert("Unknown issue!");
     } catch (error) {
-        alert("Network error.");
+        alert("Ingredient network error.");
     }
 }
 
@@ -141,7 +141,7 @@ async function deleteIngredient() {
                     refreshingredientList();
                 } else alert("Unknown issue!");
             } catch (error) {
-                alert("Network error.");
+                alert("Ingredient network error.");
             }
         }
     }

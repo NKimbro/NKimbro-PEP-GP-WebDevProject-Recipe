@@ -87,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
             } else if (response.status == 404) alert("No recipes found");
             else alert("Unknown issue!");
         } catch (error) {
-            alert("Network error.");
+            alert("Recipe network error.");
         }
     }
 
@@ -117,7 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     refreshRecipeList();
                 } else alert("Unknown issue!");
             } catch (error) {
-                alert("Network error.");
+                alert("Recipe network error.");
             }
         }
     }
@@ -153,7 +153,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         refreshRecipeList();
                     } else alert("Unknown issue!");
                 } catch (error) {
-                    alert("Network error.");
+                    alert("Recipe network error.");
                 }
             }
         }
@@ -187,7 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         refreshRecipeList();
                     } else alert("Unknown issue!");
                 } catch (error) {
-                    alert("Network error.");
+                    alert("Recipe network error.");
                 }
             }
         }
@@ -215,7 +215,7 @@ window.addEventListener("DOMContentLoaded", () => {
             } else if (response.status == 404) alert("No recipes found");
             else alert("Unknown issue!");
         } catch (error) {
-            alert("Network error.");
+            alert("Recipe network error.");
         }
     }
 
@@ -258,7 +258,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "../login/login-page.html";
             } else alert("Unknown issue!");
         } catch (error) {
-            alert("Network error.");
+            alert("Recipe network error.");
         }
     }
 
